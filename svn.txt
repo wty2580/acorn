@@ -1,0 +1,25 @@
+linux:47.254.46.134   Rtzy@201888
+
+yum install subversion（安装svn服务）
+mkdir /mnt/svn
+svnadmin create /mnt/svn（创建svn仓库）
+cd /mnt/svn
+vi conf/svnserve.conf
+	编辑svnserve.conf主配置文件，对以下几项修改如下（必须顶格写）
+	[general]
+	anon-access = none	#取消匿名访问
+	auth-access = write	#授权用户有可写权限
+	password-db = passwd	#指定用户配置文件，后面会用到
+	authz-db = authz	#指定权限配置文件，后面会用到
+vi conf/passwd
+	添加username = password（用户名 = 密码）
+vi conf/authz
+	添加：（设置用户在仓库根目录下的权限）
+	[/]
+	username = rw
+svnserve -d -r /mnt/svn（-d后台运行，-r指定仓库目录）
+
+
+
+
+通过svn://ip来访问
